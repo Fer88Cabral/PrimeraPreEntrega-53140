@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "title": "CellPhone",
+        "description": "Iphone 15PRO MAX",
+        "price": 2000,
+        "thumbnail": "img",
+        "code": "69rpm88",
+        "stock": 100
+    },
+    {
+        "id": 2,
+        "title": "CellPhone",
+        "description": "Iphone 15PRO ",
+        "price": 1500,
+        "thumbnail": "img",
+        "code": "69rpm89",
+        "stock": 99
+    },
+    {
+        "id": 3,
+        "title": "Notebook",
+        "description": "AIRPRO",
+        "price": 10500,
+        "thumbnail": "img",
+        "code": "69NPM69",
+        "stock": 88
+    }
+    ]
+    
