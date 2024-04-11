@@ -85,7 +85,7 @@ class ProductManager {
 
     getProductById(id) {
         let status = false;
-        let resp = `El producto con id ${id} no existe`;
+        let resp = `Product with id ${id} does not exist`;
 
         const producto = this.#products.find(p=> p.id == id);
             if(producto){
@@ -93,11 +93,11 @@ class ProductManager {
                 resp=producto
             }
 
-            return {status, resp}
+            return {status, resp} // retorno un objeto con status y resp (respueta)
     }
 
     updateProduct(id, objetUpdate) {
-        let result = `El producto con id ${id} no existe`;
+        let result = `Product with id ${id} does not exist`;
 
         const index = this.#products.findIndex(p => p.id === id);
 
@@ -121,13 +121,13 @@ class ProductManager {
     }
 
     deleteProduct(id) {
-        let msg = `El porducto con ese id ${id} no existe`;
+        let msg = `Product with id ${id} does not exist`;
 
         const index = this.#products.findIndex(p=> p.id === id);
         if(index !== -1) {
             this.#products = this.#products.filter(p=> p.id !== id);
             this.#guardaArchivo();
-            msg = 'Producto eliminado'
+            msg = 'Removed product'
         }
 
         return msg;

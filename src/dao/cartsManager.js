@@ -60,7 +60,7 @@ createCart() {
 
     addProductInCart(cid, pit){
 
-        let respuesta = `El carrito con id ${cid} no existe`;
+        let respuesta = `Cart with id ${cid} does not exist`;
 
         const indexCarrito = this.#carts.findIndex(c => c.id === cid);
 
@@ -70,15 +70,15 @@ createCart() {
             const producto = p.getProductById(pid);
 
             if(producto.status && indexProductoInCart === -1) {
-                this.#carts[indexCarrito].products.push({id: pid, 'quantity': 1});
+                this.#carts[indexCarrito].products.push({id: pid, 'quantity': 1}); 
                 this.#guardaArchivo();
-                respuesta = 'producto agregado al carrito'
+                respuesta = 'product added to cart'
             }else if(producto.status && indexProductoInCart !== -1){
                 ++this.#carts[indexCarrito].products[indexProductoInCart].quantity;
                 this.#guardaArchivo();
-                respuesta = 'producto agregado al carrito';
+                respuesta = 'product added to cart';
             }else{
-                respuesta = `El producto con id ${pid} no existe`; 
+                respuesta = `Product with id ${pid} does not exist`; 
             }
         } 
     }

@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from 'express';
 import CartsManager from "../dao/cartsManager.js";
 
 const router = Router();
@@ -6,7 +6,7 @@ const router = Router();
 router.get('/:cid',(req,res)=>{
     const {cid} = req.params;
     const c = new CartsManager();
-    const result = c.getCartById(Number(cid));
+    const result = c.getCartById(Number(cid)); // para traer el carrito por id 
     return res.json({result});
 });
 
@@ -19,7 +19,7 @@ router.post('/',(req,res)=>{
 router.post('/:cid/product/:pid',(req,res)=>{
     const {cid,pid} = req.params;
     const c = new CartsManager();
-    const result = c.addProductInCart(Number(cid), Number(pid));
+    const result = c.addProductInCart(Number(cid), Number(pid)); // estamos agregando al carrito
     return res.json({result});
 });
 

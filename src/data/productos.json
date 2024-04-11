@@ -25,6 +25,16 @@
         "thumbnail": "img",
         "code": "69NPM69",
         "stock": 88
+    },
+    {
+        "id": 4,
+        "title": "Tablet",
+        "description": "Ipad PRO",
+        "price": "5000",
+        "thumbnails": [],
+        "code": "69tPM69",
+        "stock": "77",
+        "category": "informatic",
+        "status": true
     }
-    ]
-    
+]
