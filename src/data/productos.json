@@ -6,7 +6,9 @@
         "price": 2000,
         "thumbnail": "img",
         "code": "69rpm88",
-        "stock": 100
+        "stock": 100,
+        "category": "ApplePhone",
+        "status": true
     },
     {
         "id": 2,
@@ -15,7 +17,9 @@
         "price": 1500,
         "thumbnail": "img",
         "code": "69rpm89",
-        "stock": 99
+        "stock": 99,
+        "category": "ApplePhone",
+        "status": true
     },
     {
         "id": 3,
@@ -24,7 +28,9 @@
         "price": 10500,
         "thumbnail": "img",
         "code": "69NPM69",
-        "stock": 88
+        "stock": 88,
+        "category": "Informatic",
+        "status": true
     },
     {
         "id": 4,
@@ -34,7 +40,7 @@
         "thumbnails": [],
         "code": "69tPM69",
         "stock": "77",
-        "category": "informatic",
+        "category": "Informatic",
         "status": true
     }
 ]
