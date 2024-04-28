@@ -42,5 +42,16 @@
         "stock": "77",
         "category": "Informatic",
         "status": true
+    },
+    {
+        "id": 5,
+        "title": "Notebook PRO",
+        "description": "PROMax",
+        "price": "20000",
+        "thumbnails": "img",
+        "code": "69NPM70",
+        "stock": "66",
+        "category": "Informatic",
+        "status": true
     }
 ]

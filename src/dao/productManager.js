@@ -5,12 +5,16 @@ import fs from 'fs';
 class ProductManager {
     #products;
     #path;
-    static idProducto = 0;
+
+    static #instance; // variable on define
 
     constructor (){
+        if(ProductManager.#instance)
+            return ProductManager.#instance;
         this.#path = './src/data/productos.json';
         this.#products = this.#leerProductosInFile();
 
+        ProductManager.#instance = this; // ayuda a no regar instancias 
     }
 
     #asignarIdProducto() {
@@ -39,7 +43,7 @@ class ProductManager {
         }
     }
 
-    addProduct (title, description, price, thumbnails=[], code, stock, category, status = true) {
+    addProduct ({title, description, price, thumbnails=[], code, stock, category, status = true}) {
 
         let result = 'an error occurred!';
 
@@ -50,7 +54,6 @@ class ProductManager {
             if(repeatedCode)
                 result = `The code ${code} is already registered in another product`;
             else{
-                ProductManager.idProducto = ProductManager.idProducto + 1;
                 const id = this.#asignarIdProducto();
 
                 const newProduct = {

@@ -37,7 +37,10 @@ socketServer.on ('connection', socket =>{
     socket.emit('productos', productos);
 
     socket.on('argegarProucto', producto=>{
-        const result = p.addProduct(producto);
+        const result = p.addProduct({...producto});
+        console.log({result});
+        if(result.producto)
+        socket.emit('productos', result.producto);
     });
 });
 
