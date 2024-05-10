@@ -1,38 +1,17 @@
 import { Router } from 'express';
-import ProductManager from '../dao/productManager.js'
+import { addProduct, deleteProduct, getProduct, getProductById, updateProduct } from '../controllers/products.js';
+//import ProductManager from '../dao/productManager.js' //FILE SYSTEM MANAGER
 
 const router = Router();
 
-router.get('/', (req,res) => {
-    const {limit} = req.query;
-    const p = new ProductManager();
-    return res.json({productos: p.getProduct(limit)});
-});
+router.get('/', getProduct); 
 
-router.get('/:pid', (req,res) => {
-    const { pid } = req.params;
-    const p = new ProductManager();
-    return res.json({producto: p.getProductById(Number(pid))});
-});
+router.get('/:pid', getProductById);
 
-router.post('/',(req, res)=>{
-    const p = new ProductManager();
-    const result = p.addProduct({...req.body});
-    return res.json({result});
-});
+router.post('/', addProduct);
 
-router.put('/:pid',(req,res)=>{
-    const {pid} = req.params;
-    const p = new ProductManager();
-    const result = p.updateProduct(Number(pid), req.body);
-    return res.json({result});
-});
+router.put('/:pid', updateProduct);
 
-router.delete('/:pid',(req,res)=>{
-    const {pid} = req.params;
-    const p = new ProductManager();
-    const result = p.deleteProduct(Number(pid));
-    return res.json({result});
-});
+router.delete('/:pid', deleteProduct);
 
 export default router;

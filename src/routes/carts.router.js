@@ -1,26 +1,12 @@
 import { Router } from 'express';
-import CartsManager from "../dao/cartsManager.js";
-
+import { addProductInCart, createCart, getCartById } from '../controllers/carts.js';
+//import CartsManager from "../dao/cartsManager.js"; //FILE SYSTEM MANAGER
 const router = Router();
 
-router.get('/:cid',(req,res)=>{
-    const {cid} = req.params;
-    const c = new CartsManager();
-    const result = c.getCartById(Number(cid)); // para traer el carrito por id 
-    return res.json({result});
-});
+router.get('/:cid', getCartById);
 
-router.post('/',(req,res)=>{
-    const c = new CartsManager();
-    const result = c.createCart(); // estamos creando el carrito
-    return res.json({result});
-});
+router.post('/', createCart);
 
-router.post('/:cid/product/:pid',(req,res)=>{
-    const {cid,pid} = req.params;
-    const c = new CartsManager();
-    const result = c.addProductInCart(Number(cid), Number(pid)); // estamos agregando al carrito
-    return res.json({result});
-});
+router.post('/:cid/product/:pid', addProductInCart);
 
 export default router;

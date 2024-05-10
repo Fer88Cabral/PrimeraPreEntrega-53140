@@ -8,7 +8,7 @@ socket.on('productos', productos => {
         const row = tbody.insertRow();
 
         row.innerHTML = `
-        <td>${producto.id}</td>
+        <td>${producto._id}</td>
         <td>${producto.title}</td>
         <td>${producto.description}</td>
         <td>${producto.price}</td>
@@ -16,7 +16,7 @@ socket.on('productos', productos => {
         <td>${producto.stock}</td>
         <td>${producto.category}</td>
         <td>${producto.status ? 'Activo': 'Desactivo'}</td>
-        <td>${producto.thumbnails}</td>
+        <td>${producto.thumbnails.length > 0 ? producto.thumbnails[0] : 'No hay imagen'}</td>
         `;
     });
 });
@@ -27,12 +27,12 @@ formulario.addEventListener('submit', function (event){
     event.preventDefault();
 
     //obtener valores del form
-    const titulo = document.getElementById('titulo').valeu;
-    const descripcion = document.getElementById('descripcion').valeu;
-    const precio = document.getElementById('precio').valeu;
-    const codigo = document.getElementById('codigo').valeu;
-    const stock = document.getElementById('stock').valeu;
-    const categoria = document.getElementById('categoria').valeu;
+    const titulo = document.getElementById('titulo').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const precio = document.getElementById('precio').value;
+    const codigo = document.getElementById('codigo').value;
+    const stock = document.getElementById('stock').value;
+    const categoria = document.getElementById('categoria').value;
 
     // envia el nuevo producto al servidor a traves del socket
     const producto = {
@@ -45,6 +45,6 @@ formulario.addEventListener('submit', function (event){
     };
 
     socket.emit('agregarProducto', producto);
-    formulario.requestFullscreen(); //limpial el form despues de enviar
 
+    formulario.reset(); //limpial el form despues de enviar
 });
