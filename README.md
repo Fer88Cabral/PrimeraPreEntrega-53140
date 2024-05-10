@@ -1,2 +1,1 @@
-<Desarrollo Backend id=''ecommerce''>
-</Desarrollo Backend>
+<Desarrollo Backend id=''ecommerce''></Desarrollo Backend>
