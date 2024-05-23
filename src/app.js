@@ -6,13 +6,14 @@ import 'dotenv/config';
 import products from './routes/product.router.js'
 import carts from './routes/carts.router.js'
 import views from './routes/views.router.js'
-import __dirname from "./utlis.js";                     //import ProductManager from "./dao/productManager.js";
+import __dirname from "./utlis.js";                     
 import {dbConnection} from "./database/config.js"
-import { productModel } from "./dao/model/products.js";
+//import { productModel } from "./dao/model/products.js";
 import {messageModel} from "./dao/model/messages.js";
+import { getProductsService, addProductService } from "./services/products.js";
 
 const app = express();
-const PORT = process.env.PORT;                       //8080;              //const p = new ProductManager();
+const PORT = process.env.PORT;                      
 
 app.use(express.json()); //para recibie info json
 app.use(express.urlencoded({extended: true})); //esto sirve cuando se enviar peticiones atravez de formularios html, esto hace serializar, transforma toda la data para poder leer.
@@ -34,10 +35,11 @@ const io = new Server (expressServer);
 io.on ('connection', async(socket) =>{
 
     //Products
-    const productos = await productModel.find(); //const productos = p.getProduct();
-    socket.emit('productos', productos);
+    const {payload} = await getProductsService({}); //const productos = p.getProduct(); -/ productModel.find
+    const produtos = payload;
+    socket.emit('productos', payload);
     socket.on('agregarProducto', async (producto)=>{
-        const newProduct = await productModel.create({...producto}); //const result = p.addProduct({...producto});
+        const newProduct = await addProductService({...producto}); //const result = p.addProduct({...producto}); - const newProduct = await productModel.create({...producto});
         if(newProduct){
             productos.push(newProduct)
             socket.emit('productos', productos);
