@@ -1,23 +1,37 @@
 import express from "express"; 
 import { Server } from "socket.io";
 import { engine } from "express-handlebars";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import 'dotenv/config';
 
-import products from './routes/product.router.js'
-import carts from './routes/carts.router.js'
-import views from './routes/views.router.js'
-import __dirname from "./utlis.js";                     
-import {dbConnection} from "./database/config.js"
-//import { productModel } from "./dao/model/products.js";
-import {messageModel} from "./dao/model/messages.js";
+import products from './routes/product.router.js';
+import carts from './routes/carts.router.js';
+import views from './routes/views.router.js';
+import __dirname from "./utlis.js";
+import { dbConnection } from "./database/config.js";
+import { messageModel } from "./dao/model/messages.js";
 import { getProductsService, addProductService } from "./services/products.js";
 
 const app = express();
-const PORT = process.env.PORT;                      
+const PORT = process.env.PORT;
 
-app.use(express.json()); //para recibie info json
-app.use(express.urlencoded({extended: true})); //esto sirve cuando se enviar peticiones atravez de formularios html, esto hace serializar, transforma toda la data para poder leer.
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
+
+app.use(session({
+    store: MongoStore.create({
+        mongoUrl: process.env.URI_MONGO_DB, //`${process.env.URI_MONGO_DB}/${process.env.NAME_DB}`,
+        dbName: process.env.NAME_DB,
+        collectionName: 'sessions', // Nombre de la colección de sesiones
+        ttl: 3600, // tiempo de expiración de la sesión
+        //autoRemove: 'native' // Elimina automáticamente las sesiones expiradas
+    }),
+    secret: process.env.SECRET_SESSION,
+    saveUninitialized: true,
+    resave: false
+}));
 
 app.engine('handlebars', engine());
 app.set('views', __dirname + '/views');
@@ -29,35 +43,38 @@ app.use('/api/carts', carts);
 
 await dbConnection();
 
-const expressServer = app.listen(PORT, () => {console.log(`Corriendo aplicacion en el puerto${PORT}`);});
-const io = new Server (expressServer);
+const expressServer = app.listen(PORT, () => {
+    console.log(`Corriendo aplicación en el puerto ${PORT}`);
+});
 
-io.on ('connection', async(socket) =>{
+const io = new Server(expressServer);
 
-    //Products
-    const {payload} = await getProductsService({}); //const productos = p.getProduct(); -/ productModel.find
-    const produtos = payload;
+io.on('connection', async (socket) => {
+    
+    // Products
+    const limit = 50;
+    const { payload } = await getProductsService({limit});
+    const productos = payload;
     socket.emit('productos', payload);
-    socket.on('agregarProducto', async (producto)=>{
-        const newProduct = await addProductService({...producto}); //const result = p.addProduct({...producto}); - const newProduct = await productModel.create({...producto});
-        if(newProduct){
-            productos.push(newProduct)
+    socket.on('agregarProducto', async (producto) => {
+        const newProduct = await addProductService({ ...producto });
+        if (newProduct) {
+            productos.push(newProduct);
             socket.emit('productos', productos);
         }
     });
 
     // Chat messages
-    const messages = await messageModel.find(); //obtenemos todos nuestros modelos
+    const messages = await messageModel.find();
     socket.emit('message', messages);
 
     socket.on('message', async (data) => {
-        const newMessage = await messageModel.create({...data});
-        if(newMessage){
+        const newMessage = await messageModel.create({ ...data });
+        if (newMessage) {
             const messages = await messageModel.find();
-            io.emit('messageLogs', messages)
+            io.emit('messageLogs', messages);
         }
     });
 
     socket.broadcast.emit('nuevo_user');
 });
-
