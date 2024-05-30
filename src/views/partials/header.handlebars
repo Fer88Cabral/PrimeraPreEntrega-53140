@@ -4,8 +4,9 @@
         <nav>
             {{#if user}}
             <p>Bienvenido, {{user}}</p>
+            <a href="/logout">Cerrar sesión</a>
             {{else}}
-            <a href="/login">Iniciar sesion</a>
+            <a href="/login">Iniciar sesión</a>
             <a href="/register">Registrarse</a>
             {{/if}}
         </nav>
