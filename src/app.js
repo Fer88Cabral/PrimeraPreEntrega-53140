@@ -1,8 +1,10 @@
+//librerias
 import express from "express"; 
 import { Server } from "socket.io";
 import { engine } from "express-handlebars";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import passport from "passport";
 import 'dotenv/config';
 
 import products from './routes/product.router.js';
@@ -12,6 +14,7 @@ import __dirname from "./utlis.js";
 import { dbConnection } from "./database/config.js";
 import { messageModel } from "./dao/model/messages.js";
 import { getProductsService, addProductService } from "./services/products.js";
+import {initializaPassport} from "./config/passport.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -32,6 +35,12 @@ app.use(session({
     saveUninitialized: true,
     resave: false
 }));
+
+// Configuracion del passport
+initializaPassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.engine('handlebars', engine());
 app.set('views', __dirname + '/views');

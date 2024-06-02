@@ -52,3 +52,23 @@ form#producto-form button[type="submit"] {
 form#producto-form button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+/* imgaen de perfil*/
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.profile-picture img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
