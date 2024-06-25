@@ -1,5 +1,4 @@
-//import {userModel} from "../dao/model/users.js";
-import {userModel} from './models/userModel.js';
+import {userModel} from './models/usersModel.js';
 
 export const getUserById = async (id) => await userModel.findById(id);
 

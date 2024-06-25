@@ -1,10 +1,9 @@
 import { Router } from 'express';
-import { addProduct, deleteProduct, getProduct, getProductById, updateProduct } from '../controllers/products.js';
-//import ProductManager from '../dao/productManager.js' //FILE SYSTEM MANAGER
+import { addProduct, deleteProduct, getProducts, getProductById, updateProduct } from '../controllers/products.js';
 
 const router = Router();
 
-router.get('/', getProduct); 
+router.get('/', getProducts); 
 
 router.get('/:pid', getProductById);
 
